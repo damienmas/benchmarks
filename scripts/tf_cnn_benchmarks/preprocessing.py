@@ -664,11 +664,12 @@ class BaseImagePreprocessor(InputPreprocessor):
     """Creates a dataset for the benchmark."""
     assert self.supports_datasets()
     glob_pattern = dataset.tf_record_pattern(subset)
-    file_names = gfile.Glob(glob_pattern)
-    if not file_names:
-      raise ValueError('Found no files in --data_dir matching: {}'
-                       .format(glob_pattern))
-    ds = tf.data.TFRecordDataset.list_files(file_names, shuffle=train)
+#    file_names = gfile.Glob(glob_pattern)
+#    if not file_names:
+#      raise ValueError('Found no files in --data_dir matching: {}'
+#                       .format(glob_pattern))
+#    ds = tf.data.TFRecordDataset.list_files(file_names, shuffle=train)
+    ds = tf.data.TFRecordDataset.list_files(glob_pattern, shuffle=train)
     ds = ds.apply(
         tf.data.experimental.parallel_interleave(
             tf.data.TFRecordDataset,
@@ -1224,11 +1225,12 @@ class LibrispeechPreprocessor(InputPreprocessor):
     # latter uses tf.data.experimental.map_and_batch(). Try to merge them.
     assert self.supports_datasets()
     glob_pattern = dataset.tf_record_pattern(subset)
-    file_names = gfile.Glob(glob_pattern)
-    if not file_names:
-      raise ValueError('Found no files in --data_dir matching: {}'
-                       .format(glob_pattern))
-    ds = tf.data.TFRecordDataset.list_files(file_names, shuffle=train)
+#    file_names = gfile.Glob(glob_pattern)
+#    if not file_names:
+#      raise ValueError('Found no files in --data_dir matching: {}'
+#                       .format(glob_pattern))
+#    ds = tf.data.TFRecordDataset.list_files(file_names, shuffle=train)
+    ds = tf.data.TFRecordDataset.list_files(glob_pattern, shuffle=train)
     ds = ds.apply(
         tf.data.experimental.parallel_interleave(
             tf.data.TFRecordDataset,
